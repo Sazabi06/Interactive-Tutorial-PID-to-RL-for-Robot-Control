@@ -13,6 +13,8 @@ if(l==='en'){d.setAttribute('data-lang','en');d.setAttribute('lang','en');docume
 if(th==='light'||th==='dark'){d.setAttribute('data-theme',th);}})();
 </script>
 <meta name="description" content="从 PID 到强化学习：机器人控制的一条问题链。八类方法，每一类都在回答上一类卡住的地方，配可以动手的交互实验。/ From PID to reinforcement learning: robot control as a chain of questions, with hands-on experiments.">
+<meta name="author" content="Weibo Gao (Sazabi06)">
+<meta name="copyright" content="Copyright 2026 Weibo Gao (Sazabi06). All rights reserved.">
 <meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -82,6 +84,8 @@ if(th==='light'||th==='dark'){d.setAttribute('data-theme',th);}})();
 html{font-size:17px;-webkit-text-size-adjust:100%;text-size-adjust:100%;background:var(--bg)}
 @media (max-width:599.98px){html{font-size:16px}}
 html[data-lang="zh"] [data-l="en"],html[data-lang="en"] [data-l="zh"]{display:none !important}
+/* Retained in source at the author’s request; hidden in both languages and in print. */
+[data-public-hidden]{display:none !important}
 body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:1rem;line-height:1.8;
   font-kerning:normal;overflow-wrap:break-word;-webkit-font-smoothing:antialiased}
 html[data-lang="en"] body{line-height:1.62}
@@ -147,6 +151,12 @@ html[data-lang="en"] .lt-text::before{content:"中文"}
 .masthead{padding:52px 0 36px;margin-bottom:48px;border-bottom:1px solid var(--border)}
 .masthead h1{max-width:22em}
 .masthead .subtitle{font-size:1.1rem;line-height:1.6;color:var(--text-2);margin:16px 0 0;max-width:36em}
+.masthead .author-line{font-size:.92rem;color:var(--text-2);margin:18px 0 0}
+.masthead .update-note{font-size:.86rem;line-height:1.65;color:var(--text-2);margin:10px 0 0;max-width:44em}
+#author-rights{margin-top:48px;padding:24px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+#author-rights h2{font-size:1.25rem;margin-bottom:.8rem}
+#author-rights p{font-size:.86rem;line-height:1.75;color:var(--text-2)}
+#author-rights p:last-child{margin-bottom:0}
 .masthead .byline{font-size:.86rem;line-height:1.6;color:var(--text-3);margin:18px 0 0;max-width:44em}
 .masthead .mast-meta{font-size:.84rem;color:var(--text-3);margin:10px 0 0;font-variant-numeric:tabular-nums}
 main{display:block}
@@ -647,6 +657,8 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <header class="masthead" id="top">
       <h1><span data-l="zh" lang="zh-CN">从 PID 到强化学习：<wbr>机器人控制的一条问题链</span><span data-l="en" lang="en">From PID to Reinforcement Learning: Robot Control as a Chain of Questions</span></h1>
       <p class="subtitle"><span data-l="zh" lang="zh-CN">八类方法，每一类都在回答上一类卡住的地方——用第一性原理和可以动手的小实验重新讲一遍</span><span data-l="en" lang="en">Eight families of methods, each answering where the previous one gets stuck — rebuilt from first principles, with experiments you can play with</span></p>
+      <p class="author-line"><span data-l="zh" lang="zh-CN">作者：</span><span data-l="en" lang="en">By </span><a href="https://github.com/Sazabi06" rel="author">Weibo Gao (Sazabi06)</a> · <a href="#author-rights">© 2026 <span data-l="zh" lang="zh-CN">版权所有</span><span data-l="en" lang="en">All rights reserved</span></a></p>
+      <p class="update-note"><span data-l="zh" lang="zh-CN">作者会持续更新这份文档。欢迎到 <a href="#pid-to-rl-comments">Discussions 讨论区</a>提出纠错、补充文献或分享实验反馈，一起完善内容。</span><span data-l="en" lang="en">The author will continue to update this document. Join the <a href="#pid-to-rl-comments">Discussions below</a> to suggest corrections, recommend references, or share experimental feedback and help improve it.</span></p>
       <p class="byline"><span data-l="zh" lang="zh-CN">页面上所有仿真参数均为示意值</span><span data-l="en" lang="en">All simulation parameters on this page are illustrative</span></p>
       <p class="mast-meta" id="mast-meta"></p>
     </header>
@@ -6207,11 +6219,11 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <p>You can also skip starting from scratch and learn from demonstrations (<dfn>imitation learning</dfn>); the ways it combines with RL are covered in a “Going deeper” later in this section.</p>
   </div>
 
-  <p class="exo-note"><span class="exo-label"><span data-l="zh" lang="zh-CN">外骨骼视角</span><span data-l="en" lang="en">Exoskeleton lens</span></span><span data-l="zh" lang="zh-CN">外骨骼既难精确建模（气动腔压、织物迟滞、软组织与绑带），又不能在人身上大量试错。所以强化学习如果要用，只放在高层，输出有界的参数：助力的幅值与时机，或者限定在无源安全区间内的阻抗；稳定交给底层的压力环或力矩环。个性化调参更常用<dfn>人在回路优化</dfn>（贝叶斯优化或 CMA-ES：每试一组参数，就测一次穿戴者的反应，再挑下一组最值得试的），通常调 2–4 个参数，每组评估几分钟。仿真训练出的外骨骼辅助策略是否真的有效，目前仍有争议：Luo 等（2024）报告仿真训练的髋外骨骼使步行、跑步、爬楼的代谢分别降低 24.3%、13.1%、15.4%；2026 年，十位外骨骼领域的研究者在预印本中对这些结果提出质疑，原作者随后也以预印本回应（两边的论点见下面的工程实例）。在独立复现之前，这仍是未解决的问题。</span><span data-l="en" lang="en">An exoskeleton is hard to model precisely (chamber pressure, fabric hysteresis, soft tissue and straps), and you can’t run large-scale trial and error on a person. So if RL is used at all, it belongs at the top, emitting bounded parameters — assistance magnitude and timing, or impedance restricted to a passively safe range — while the low-level pressure or torque loop keeps things stable. Personalization more often uses <dfn>human-in-the-loop optimization</dfn> (Bayesian optimization or CMA-ES: try a parameter set, measure how the wearer responds, pick the next set most worth trying), usually over 2–4 parameters with a few minutes per evaluation. Whether exoskeleton assistance trained in simulation really works is still disputed. Luo et al. (2024) reported that a simulation-trained hip exoskeleton cut metabolic cost by 24.3%, 13.1% and 15.4% in walking, running and stair climbing; in 2026, ten exoskeleton researchers questioned these results in a preprint, and the original authors replied in a preprint of their own (both sides’ arguments are in the case below). Until the results are independently reproduced, this remains an open problem.</span></p>
+  <p class="exo-note"><span class="exo-label"><span data-l="zh" lang="zh-CN">外骨骼视角</span><span data-l="en" lang="en">Exoskeleton lens</span></span><span data-l="zh" lang="zh-CN">外骨骼既难精确建模（气动腔压、织物迟滞、软组织与绑带），又不能在人身上大量试错。所以强化学习如果要用，只放在高层，输出有界的参数：助力的幅值与时机，或者限定在无源安全区间内的阻抗；稳定交给底层的压力环或力矩环。个性化调参更常用<dfn>人在回路优化</dfn>（贝叶斯优化或 CMA-ES：每试一组参数，就测一次穿戴者的反应，再挑下一组最值得试的），通常调 2–4 个参数，每组评估几分钟。<span hidden data-public-hidden="preprint-discussion">仿真训练出的外骨骼辅助策略是否真的有效，目前仍有争议：</span>Luo 等（2024）报告仿真训练的髋外骨骼使步行、跑步、爬楼的代谢分别降低 24.3%、13.1%、15.4%。<span hidden data-public-hidden="preprint-discussion">；2026 年，十位外骨骼领域的研究者在预印本中对这些结果提出质疑，原作者随后也以预印本回应（两边的论点见下面的工程实例）。在独立复现之前，这仍是未解决的问题。</span></span><span data-l="en" lang="en">An exoskeleton is hard to model precisely (chamber pressure, fabric hysteresis, soft tissue and straps), and you can’t run large-scale trial and error on a person. So if RL is used at all, it belongs at the top, emitting bounded parameters — assistance magnitude and timing, or impedance restricted to a passively safe range — while the low-level pressure or torque loop keeps things stable. Personalization more often uses <dfn>human-in-the-loop optimization</dfn> (Bayesian optimization or CMA-ES: try a parameter set, measure how the wearer responds, pick the next set most worth trying), usually over 2–4 parameters with a few minutes per evaluation. <span hidden data-public-hidden="preprint-discussion">Whether exoskeleton assistance trained in simulation really works is still disputed. </span>Luo et al. (2024) reported that a simulation-trained hip exoskeleton cut metabolic cost by 24.3%, 13.1% and 15.4% in walking, running and stair climbing.<span hidden data-public-hidden="preprint-discussion">; in 2026, ten exoskeleton researchers questioned these results in a preprint, and the original authors replied in a preprint of their own (both sides’ arguments are in the case below). Until the results are independently reproduced, this remains an open problem.</span></span></p>
 
   <aside class="case-study" aria-labelledby="cs-s8-exo-t" id="cs-s8-exo">
     <p class="cs-label"><span data-l="zh" lang="zh-CN">工程实例</span><span data-l="en" lang="en">From the field</span></p>
-    <h4 class="cs-title" id="cs-s8-exo-t"><span data-l="zh" lang="zh-CN">外骨骼：个性化靠人在回路优化，仿真训练仍有争议</span><span data-l="en" lang="en">Exoskeletons: personalized by human-in-the-loop optimization; simulation-trained assistance still disputed</span></h4>
+    <h4 class="cs-title" id="cs-s8-exo-t"><span data-l="zh" lang="zh-CN">外骨骼：个性化靠人在回路优化<span hidden data-public-hidden="preprint-discussion">，仿真训练仍有争议</span></span><span data-l="en" lang="en">Exoskeletons: personalized by human-in-the-loop optimization<span hidden data-public-hidden="preprint-discussion">; simulation-trained assistance still disputed</span></span></h4>
     <div class="cs-body">
       <div data-l="zh" lang="zh-CN">
         <p><strong>问题</strong>　助力曲线（何时开始、峰值多大、何时结束）对不同的人最优值不同。每评估一组参数，要测几分钟代谢（呼吸气体），样本极少、噪声大，人还会慢慢适应。</p>
@@ -6231,16 +6243,16 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <div class="cs-body">
       <div data-l="zh" lang="zh-CN">
         <p>Ding 等平均 21.4 ± 1.0 分钟就找到最优参数；Slade 等的户外优化还让自选步速提高了 9 ± 4%，在 1.5 m/s 的跑步机上代谢降低 23 ± 8%。</p>
-        <p><strong>争议</strong>　2026 年 4 月，十位外骨骼领域的研究者（Collins 等）发表预印本，认为 Luo 等 2024 的结果违反步态中机械功率与肌肉能耗之间的生理学限制，且作者没有公开可执行代码，结论是这项研究的目标“尚未被可验证地实现”。同年 6 月，原作者（Luo 等）发表回应预印本，认为质疑所用的“上限”只是平均值，复现实验也与原方法不同。两篇都是预印本；在独立、可复现的人体实验之前，这仍是未解决的问题。</p>
+        <p hidden data-public-hidden="preprint-discussion"><strong>争议</strong>　2026 年 4 月，十位外骨骼领域的研究者（Collins 等）发表预印本，认为 Luo 等 2024 的结果违反步态中机械功率与肌肉能耗之间的生理学限制，且作者没有公开可执行代码，结论是这项研究的目标“尚未被可验证地实现”。同年 6 月，原作者（Luo 等）发表回应预印本，认为质疑所用的“上限”只是平均值，复现实验也与原方法不同。两篇都是预印本；在独立、可复现的人体实验之前，这仍是未解决的问题。</p>
         <p><strong>学到什么</strong>　① 人在回路优化是低维黑箱优化（接近多臂老虎机问题），不是强化学习：评估几十次、参数有界，所以安全。② 人机系统里最弱的一环是“人”的模型：仿真里的代谢靠肌骨模型估算。③ 代码与模型是否公开，是判断可信度的前提。</p>
       </div>
       <div data-l="en" lang="en">
         <p>Ding et al. found the optimum in 21.4 ± 1.0 minutes on average; Slade et al.’s outdoor optimization also raised self-selected walking speed by 9 ± 4% and cut metabolic cost by 23 ± 8% on a treadmill at 1.5 m/s.</p>
-        <p><strong>The dispute</strong>　In April 2026, ten exoskeleton researchers (Collins et al.) posted a preprint arguing that the results of Luo et al. 2024 violate physiological limits on the relationship between mechanical power and muscle energy use in gait, that no executable code had been released, and that the study’s goals “have not yet been verifiably achieved”. In June the original authors (Luo et al.) posted a reply preprint, arguing that the “limit” is an average rather than a ceiling and that the replication did not reproduce their method. Both are preprints; until independent, reproducible human experiments exist, the question stays open.</p>
+        <p hidden data-public-hidden="preprint-discussion"><strong>The dispute</strong>　In April 2026, ten exoskeleton researchers (Collins et al.) posted a preprint arguing that the results of Luo et al. 2024 violate physiological limits on the relationship between mechanical power and muscle energy use in gait, that no executable code had been released, and that the study’s goals “have not yet been verifiably achieved”. In June the original authors (Luo et al.) posted a reply preprint, arguing that the “limit” is an average rather than a ceiling and that the replication did not reproduce their method. Both are preprints; until independent, reproducible human experiments exist, the question stays open.</p>
         <p><strong>Lessons</strong>　(1) Human-in-the-loop optimization is low-dimensional black-box optimization — close to a bandit problem — not reinforcement learning: a few dozen evaluations over bounded parameters, which is why it is safe. (2) In a human–machine system the weakest link is the model of the human; in simulation, metabolic cost comes from a musculoskeletal model. (3) Whether code and models are released is a precondition for judging credibility.</p>
       </div>
     </div>
-    <p class="cs-source"><span data-l="zh" lang="zh-CN">出处：</span><span data-l="en" lang="en">Sources: </span>Zhang, J., Fiers, P., Witte, K. A., Jackson, R. W., Poggensee, K. L., Atkeson, C. G., &amp; Collins, S. H. (2017). Human-in-the-loop optimization of exoskeleton assistance during walking. <i>Science</i>, 356(6344), 1280–1284. <a href="https://doi.org/10.1126/science.aal5054" rel="noopener">doi:10.1126/science.aal5054</a> · Ding, Y., Kim, M., Kuindersma, S., &amp; Walsh, C. J. (2018). Human-in-the-loop optimization of hip assistance with a soft exosuit during walking. <i>Science Robotics</i>, 3(15), eaar5438. <a href="https://doi.org/10.1126/scirobotics.aar5438" rel="noopener">doi:10.1126/scirobotics.aar5438</a> · Slade, P., Kochenderfer, M. J., Delp, S. L., &amp; Collins, S. H. (2022). Personalizing exoskeleton assistance while walking in the real world. <i>Nature</i>, 610(7931), 277–282. <a href="https://doi.org/10.1038/s41586-022-05191-1" rel="noopener">doi:10.1038/s41586-022-05191-1</a> · Luo, S., et al. (2024). Experiment-free exoskeleton assistance via learning in simulation. <i>Nature</i>, 630(8016), 353–359. <a href="https://doi.org/10.1038/s41586-024-07382-4" rel="noopener">doi:10.1038/s41586-024-07382-4</a> · Collins, S. H., De Groote, F., Gregg, R. D., Huang, H., Lenzi, T., Sartori, M., Sawicki, G. S., Si, J., Slade, P., &amp; Young, A. J. (2026). Experiment-free learning of exoskeleton assistance remains an unsolved problem. <i>bioRxiv</i> <span data-l="zh" lang="zh-CN">（预印本）</span><span data-l="en" lang="en">(preprint)</span>. <a href="https://doi.org/10.64898/2026.04.01.715109" rel="noopener">doi:10.64898/2026.04.01.715109</a> · Luo, S., et al. (2026). Experiment-free learning of exoskeleton assistance is not an unsolved problem. <i>bioRxiv</i> <span data-l="zh" lang="zh-CN">（预印本）</span><span data-l="en" lang="en">(preprint)</span>. <a href="https://doi.org/10.64898/2026.06.16.731058" rel="noopener">doi:10.64898/2026.06.16.731058</a></p>
+    <p class="cs-source"><span data-l="zh" lang="zh-CN">出处：</span><span data-l="en" lang="en">Sources: </span>Zhang, J., Fiers, P., Witte, K. A., Jackson, R. W., Poggensee, K. L., Atkeson, C. G., &amp; Collins, S. H. (2017). Human-in-the-loop optimization of exoskeleton assistance during walking. <i>Science</i>, 356(6344), 1280–1284. <a href="https://doi.org/10.1126/science.aal5054" rel="noopener">doi:10.1126/science.aal5054</a> · Ding, Y., Kim, M., Kuindersma, S., &amp; Walsh, C. J. (2018). Human-in-the-loop optimization of hip assistance with a soft exosuit during walking. <i>Science Robotics</i>, 3(15), eaar5438. <a href="https://doi.org/10.1126/scirobotics.aar5438" rel="noopener">doi:10.1126/scirobotics.aar5438</a> · Slade, P., Kochenderfer, M. J., Delp, S. L., &amp; Collins, S. H. (2022). Personalizing exoskeleton assistance while walking in the real world. <i>Nature</i>, 610(7931), 277–282. <a href="https://doi.org/10.1038/s41586-022-05191-1" rel="noopener">doi:10.1038/s41586-022-05191-1</a> · Luo, S., et al. (2024). Experiment-free exoskeleton assistance via learning in simulation. <i>Nature</i>, 630(8016), 353–359. <a href="https://doi.org/10.1038/s41586-024-07382-4" rel="noopener">doi:10.1038/s41586-024-07382-4</a><span hidden data-public-hidden="preprint-discussion"> · Collins, S. H., De Groote, F., Gregg, R. D., Huang, H., Lenzi, T., Sartori, M., Sawicki, G. S., Si, J., Slade, P., &amp; Young, A. J. (2026). Experiment-free learning of exoskeleton assistance remains an unsolved problem. <i>bioRxiv</i> <span data-l="zh" lang="zh-CN">（预印本）</span><span data-l="en" lang="en">(preprint)</span>. <a href="https://doi.org/10.64898/2026.04.01.715109" rel="noopener">doi:10.64898/2026.04.01.715109</a> · Luo, S., et al. (2026). Experiment-free learning of exoskeleton assistance is not an unsolved problem. <i>bioRxiv</i> <span data-l="zh" lang="zh-CN">（预印本）</span><span data-l="en" lang="en">(preprint)</span>. <a href="https://doi.org/10.64898/2026.06.16.731058" rel="noopener">doi:10.64898/2026.06.16.731058</a></span></p>
   </aside>
 
   <aside class="flip" aria-labelledby="s8-flip">
@@ -6768,7 +6780,7 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <p><strong>与时变的人耦合。</strong>“人是无源的”只是工程假设；人体阻抗与意图变化快、测不准。</p>
     <p><strong>难建模执行器的仿真—现实差距。</strong>软体、气动、织物执行器的迟滞与压力动态，仍是短板。</p>
     <p><strong>接触丰富的操作。</strong>接触切换、摩擦又不确定时，模型派和学习派都还没有通用解法。</p>
-    <p><strong>仿真训练的外骨骼辅助。</strong>Luo 等（2024）报告了显著的代谢降低；2026 年的一篇预印本（Collins 等）对这些结果提出质疑，原作者随后也以预印本回应。在独立、可复现的人体实验之前，这仍是未解决的问题。</p>
+    <p hidden data-public-hidden="preprint-discussion"><strong>仿真训练的外骨骼辅助。</strong>Luo 等（2024）报告了显著的代谢降低；2026 年的一篇预印本（Collins 等）对这些结果提出质疑，原作者随后也以预印本回应。在独立、可复现的人体实验之前，这仍是未解决的问题。</p>
     <p><strong>本文自己的简化。</strong>这里的实验都简化到一两个自由度和示意参数，传感器也大多是理想的；真实系统的难点，常常就出在这些被简化掉的地方。</p>
   </div>
   <div data-l="en" lang="en">
@@ -6776,7 +6788,7 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <p><strong>Coupling with a changing human.</strong> “The human is passive” is an engineering assumption; human impedance and intent change fast and are hard to measure.</p>
     <p><strong>The sim-to-real gap for hard-to-model actuators.</strong> Hysteresis and pressure dynamics in soft, pneumatic and textile actuators remain the weak spot.</p>
     <p><strong>Contact-rich manipulation.</strong> With switching contacts and uncertain friction, neither model-based nor learning-based methods have a general answer yet.</p>
-    <p><strong>Simulation-trained exoskeleton assistance.</strong> Luo et al. (2024) reported large metabolic reductions; a 2026 preprint (Collins et al.) questioned those results, and the original authors replied in a preprint of their own. Until independent, reproducible human experiments exist, this remains an open problem.</p>
+    <p hidden data-public-hidden="preprint-discussion"><strong>Simulation-trained exoskeleton assistance.</strong> Luo et al. (2024) reported large metabolic reductions; a 2026 preprint (Collins et al.) questioned those results, and the original authors replied in a preprint of their own. Until independent, reproducible human experiments exist, this remains an open problem.</p>
     <p><strong>This page’s own simplifications.</strong> Every experiment here is reduced to one or two degrees of freedom and illustrative numbers, mostly with ideal sensors; real difficulty often hides in exactly what was simplified away.</p>
   </div>
 
@@ -6813,11 +6825,18 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
     <li>Ames, A. D., Coogan, S., Egerstedt, M., Notomista, G., Sreenath, K., &amp; Tabuada, P. (2019). Control barrier functions: Theory and applications. <i>Proc. European Control Conference (ECC)</i>, 3420–3431.</li>
     <li>Tucker, M. R., Olivier, J., Pagel, A., Bleuler, H., Bouri, M., Lambercy, O., Millán, J. del R., Riener, R., Vallery, H., &amp; Gassert, R. (2015). Control strategies for active lower extremity prosthetics and orthotics: A review. <i>Journal of NeuroEngineering and Rehabilitation</i>, 12, 1.</li>
     <li>Luo, S., Jiang, M., Zhang, S., Zhu, J., Yu, S., Dominguez Silva, I., Wang, T., Rouse, E., Zhou, B., Yuk, H., Zhou, X., &amp; Su, H. (2024). Experiment-free exoskeleton assistance via learning in simulation. <i>Nature</i>, 630, 353–359.</li>
-    <li>Collins, S. H., De Groote, F., Gregg, R. D., Huang, H., Lenzi, T., Sartori, M., Sawicki, G. S., Si, J., Slade, P., &amp; Young, A. J. (2026). Experiment-free learning of exoskeleton assistance remains an unsolved problem. <i>bioRxiv</i> (<span data-l="zh" lang="zh-CN">预印本</span><span data-l="en" lang="en">preprint</span>). doi:10.64898/2026.04.01.715109</li>
-    <li>Luo, S., Jiang, M., Zhang, S., Zhu, J., Yu, S., Dominguez Silva, I., Zhou, B., Yuk, H., Zhou, X., &amp; Su, H. (2026). Experiment-free learning of exoskeleton assistance is not an unsolved problem. <i>bioRxiv</i> (<span data-l="zh" lang="zh-CN">预印本</span><span data-l="en" lang="en">preprint</span>). doi:10.64898/2026.06.16.731058</li>
+    <li hidden data-public-hidden="preprint-reference">Collins, S. H., De Groote, F., Gregg, R. D., Huang, H., Lenzi, T., Sartori, M., Sawicki, G. S., Si, J., Slade, P., &amp; Young, A. J. (2026). Experiment-free learning of exoskeleton assistance remains an unsolved problem. <i>bioRxiv</i> (<span data-l="zh" lang="zh-CN">预印本</span><span data-l="en" lang="en">preprint</span>). doi:10.64898/2026.04.01.715109</li>
+    <li hidden data-public-hidden="preprint-reference">Luo, S., Jiang, M., Zhang, S., Zhu, J., Yu, S., Dominguez Silva, I., Zhou, B., Yuk, H., Zhou, X., &amp; Su, H. (2026). Experiment-free learning of exoskeleton assistance is not an unsolved problem. <i>bioRxiv</i> (<span data-l="zh" lang="zh-CN">预印本</span><span data-l="en" lang="en">preprint</span>). doi:10.64898/2026.06.16.731058</li>
   </ol>
 </section>
     </main>
+<section id="author-rights" aria-labelledby="author-rights-title">
+  <h2 id="author-rights-title"><span data-l="zh" lang="zh-CN">作者与版权</span><span data-l="en" lang="en">Author and copyright</span></h2>
+  <p><strong>© 2026 Weibo Gao (Sazabi06). <span data-l="zh" lang="zh-CN">保留所有权利。</span><span data-l="en" lang="en">All rights reserved.</span></strong></p>
+  <p data-l="zh" lang="zh-CN">本页中由作者享有版权的原创文字、图示及代码，版权归 Weibo Gao（Sazabi06）所有。欢迎阅读、学习和分享本页链接。除法律允许或 GitHub 服务条款要求的使用外，未经作者事先书面许可，不得复制、转载、改编、重新发布这些内容，或将其用于商业用途。不得删除作者署名、冒用作者身份，或暗示作者为其他作品背书。文中引用的文献及第三方材料，其权利属于各自权利人。</p>
+  <p data-l="en" lang="en">Copyright in the original text, illustrations, and code on this page, to the extent owned by the author, belongs to Weibo Gao (Sazabi06). You are welcome to read, study, and share links to this page. Except as permitted by law or required by GitHub’s Terms of Service, copying, republication, adaptation, redistribution, or commercial use of that content requires the author’s prior written permission. Do not remove the author’s attribution, impersonate the author, or imply the author’s endorsement of other work. Cited publications and third-party materials remain the property of their respective rights holders.</p>
+  <p><span data-l="zh" lang="zh-CN">如需授权，请通过本项目的 <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">GitHub Discussions</a> 联系作者。</span><span data-l="en" lang="en">For permission requests, contact the author through this project’s <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">GitHub Discussions</a>.</span></p>
+</section>
 <!-- BEGIN PID-to-RL comments -->
 <style>
 #pid-to-rl-comments{margin-top:64px;padding-top:32px;border-top:1px solid var(--border)}
@@ -6827,7 +6846,7 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
 </style>
 <section id="pid-to-rl-comments" aria-labelledby="pid-to-rl-comments-title">
   <h2 id="pid-to-rl-comments-title"><span data-l="zh" lang="zh-CN">评论与讨论</span><span data-l="en" lang="en">Comments and discussion</span></h2>
-  <p><span data-l="zh" lang="zh-CN">欢迎提问、反馈或分享实验结果。登录 GitHub 后即可评论；评论保存在本项目的 <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">Discussions</a> 中。评论区需要联网。</span><span data-l="en" lang="en">Questions, feedback, and experiment results are welcome. Sign in with GitHub to comment. Comments are stored in this project's <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">Discussions</a>. Comments require an internet connection.</span></p>
+  <p><span data-l="zh" lang="zh-CN">欢迎在 Discussions 提问、指出错误、补充文献或分享实验结果，帮助进一步完善这份文档。作者会持续更新，并结合讨论核对和修订内容。登录 GitHub 后即可在下方评论，也可以到项目讨论区发起话题；评论保存在本项目的 <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">Discussions</a> 中。评论区需要联网。</span><span data-l="en" lang="en">Please use Discussions to ask questions, flag errors, suggest references, or share experimental results and help improve this document. The author will continue to update the document and review feedback when making revisions. Sign in with GitHub to comment below, or start a topic in the project’s discussion forum. Comments are stored in this project's <a href="https://github.com/Sazabi06/Interactive-Tutorial-PID-to-RL-for-Robot-Control/discussions">Discussions</a>. Comments require an internet connection.</span></p>
   <div class="giscus"></div>
 </section>
 <script id="pid-to-rl-giscus">
@@ -6883,6 +6902,7 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
   </div>
 </div>
 <footer class="site-footer">
+  <p>© 2026 Weibo Gao (Sazabi06) · <a href="#author-rights"><span data-l="zh" lang="zh-CN">版权所有，保留所有权利</span><span data-l="en" lang="en">All rights reserved</span></a></p>
   <p><span data-l="zh" lang="zh-CN">从 PID 到强化学习 · 所有仿真参数为示意值 · 页面可离线打开</span><span data-l="en" lang="en">From PID to RL · all simulation parameters are illustrative · works offline</span></p>
 </footer>
 
