@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>从 PID 到强化学习</title>
+<title>机器人控制：从 PID 到 RL</title>
 <script>
 /* Runs before first paint: restore language and theme so nothing flashes. */
 (function(){var d=document.documentElement,l=null,th=null;
 try{l=localStorage.getItem('pid2rl-lang');th=localStorage.getItem('pid2rl-theme');}catch(e){}
 try{var m=/[?&]lang=(zh|en)\b/.exec(location.search);if(m)l=m[1];}catch(e){}
-if(l==='en'){d.setAttribute('data-lang','en');d.setAttribute('lang','en');document.title='From PID to RL';}
+if(l==='en'){d.setAttribute('data-lang','en');d.setAttribute('lang','en');document.title='Robotic Control: from PID to RL';}
 if(th==='light'||th==='dark'){d.setAttribute('data-theme',th);}})();
 </script>
 <meta name="description" content="从 PID 到强化学习：机器人控制的一条问题链。八类方法，每一类都在回答上一类卡住的地方，配可以动手的交互实验。/ From PID to reinforcement learning: robot control as a chain of questions, with hands-on experiments.">
@@ -124,6 +124,7 @@ input[type=range]:focus-visible{outline-offset:3px}
 .topbar-inner{max-width:1180px;height:100%;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .brand{font-family:var(--font-serif);font-weight:600;font-size:1rem;color:var(--text);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .brand:hover{text-decoration:none;color:var(--text)}
+@media (max-width:600px){.brand{white-space:normal;line-height:1.2;font-size:.875rem}}
 .topbar-actions{display:flex;align-items:center;gap:8px;flex:none}
 .tb-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;min-width:40px;padding:0 10px;
   border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--text-2);
@@ -629,7 +630,7 @@ details.ctl-more > .ctl + .ctl,details.ctl-more > .ctl + .ctl-buttons{margin-top
 <p class="sr-only" id="plot-kbd-hint"><span data-l="zh" lang="zh-CN">按 Tab 聚焦图表后，用左右方向键逐点读数。</span><span data-l="en" lang="en">Focus a chart with Tab, then use the left and right arrow keys to step through its values.</span></p>
 <header class="topbar" id="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="#top"><span data-l="zh" lang="zh-CN">从 PID 到强化学习</span><span data-l="en" lang="en">From PID to RL</span></a>
+    <a class="brand" href="#top"><span data-l="zh" lang="zh-CN">机器人控制：从 PID 到 RL</span><span data-l="en" lang="en">Robotic Control: from PID to RL</span></a>
     <div class="topbar-actions">
       <button type="button" id="toc-toggle" class="tb-btn" aria-expanded="false" aria-controls="toc"><svg class="tb-ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg><span class="toc-btn-text"><span data-l="zh" lang="zh-CN">目录</span><span data-l="en" lang="en">Contents</span></span></button>
       <button type="button" id="theme-toggle" class="tb-btn" aria-label="主题：跟随系统">
@@ -6980,7 +6981,7 @@ i18n.add({
     'common.defaults': '恢复默认', 'common.finish': '跳到结束', 'common.illustrative': '参数为示意值', 'common.diverged': '发散',
     'common.previous': '上一次设置', 'common.target': '目标', 'common.reference': '参考', 'common.limit': '上限',
     'common.computing': '计算中…', 'common.time': '时间', 'common.offscale': '越界', 'common.failed': '这个实验加载失败',
-    'shell.title': '从 PID 到强化学习', 'shell.tocRead': '已读 {p}%',
+    'shell.title': '机器人控制：从 PID 到 RL', 'shell.tocRead': '已读 {p}%',
     'shell.theme.system': '主题：跟随系统', 'shell.theme.light': '主题：浅色', 'shell.theme.dark': '主题：深色',
     'shell.theme.aria': '{label}（点击切换）', 'shell.lang.aria': 'EN – Switch to English', 'shell.lang.label': 'EN',
     'shell.meta': '主线阅读约 {min} 分钟（每节开头有 5 分钟版要点）· {n} 个可以动手的实验', 'shell.metaNoExp': '主线阅读约 {min} 分钟（每节开头有 5 分钟版要点）',
@@ -6995,7 +6996,7 @@ i18n.add({
     'common.defaults': 'Restore defaults', 'common.finish': 'Skip to the end', 'common.illustrative': 'Illustrative parameters', 'common.diverged': 'Diverged',
     'common.previous': 'Previous setting', 'common.target': 'Target', 'common.reference': 'Reference', 'common.limit': 'Limit',
     'common.computing': 'Computing…', 'common.time': 'Time', 'common.offscale': 'off scale', 'common.failed': 'This experiment failed to load',
-    'shell.title': 'From PID to RL', 'shell.tocRead': '{p}% read',
+    'shell.title': 'Robotic Control: from PID to RL', 'shell.tocRead': '{p}% read',
     'shell.theme.system': 'Theme: system', 'shell.theme.light': 'Theme: light', 'shell.theme.dark': 'Theme: dark',
     'shell.theme.aria': '{label} (click to change)', 'shell.lang.aria': '中文 – 切换到中文', 'shell.lang.label': '中文',
     'shell.meta': 'Main path about {min} min (each section opens with a 5-minute summary) · {n} hands-on experiments', 'shell.metaNoExp': 'Main path about {min} min (each section opens with a 5-minute summary)',
@@ -7007,7 +7008,7 @@ i18n.add({
   }
 });
 
-const TITLES = { zh: '从 PID 到强化学习', en: 'From PID to RL' };
+const TITLES = { zh: '机器人控制：从 PID 到 RL', en: 'Robotic Control: from PID to RL' };
 const shellLangFns = [];
 function applyStaticLang(scope) {
   const L = lang();
